@@ -1,5 +1,6 @@
 import http from 'k6/http';
 import {sleep} from 'k6';
+import { Trend } from 'k6/metrics';
 
 export const urls = [
     //Home
@@ -24,18 +25,21 @@ export const urls = [
     'https://staging.cnnbrasil.com.br/ao-vivo/'
 ];
 
+const urlTrend = new Trend('url_response_time', true); // true = com tags
+
 export default function () {
-    for (const url of urls) {
-        const bypass = Math.random() < 0.25;
+  for (const url of urls) {
+    const bypass = Math.random() < 0.25;
+    const res = http.get(url, {
+      headers: bypass ? { 'Cookie': 'vip-go-cb=1' } : {},
+    });
 
-        http.get(url, {
-            headers: bypass ? {'Cookie': 'vip-go-cb=1'} : {},
-            tags: {
-                name: 'load-test',
-                cache: bypass ? 'false' : 'true',
-            },
-        });
+    // Registra tempo com URL como tag (apenas aqui, fora do `http.get`)
+    urlTrend.add(res.timings.duration, {
+      url: url, // cuidado: ainda explode se tiver muitas URLs únicas
+      cache: bypass ? 'false' : 'true',
+    });
 
-        sleep(10);
-    }
+    sleep(10);
+  }
 }
