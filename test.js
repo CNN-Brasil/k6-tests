@@ -31,15 +31,19 @@ export default function () {
   for (const url of urls) {
     const bypass = Math.random() < 0.25;
     const res = http.get(url, {
-      headers: bypass ? { 'Cookie': 'vip-go-cb=1' } : {},
+        headers: bypass ? {'Cookie': 'vip-go-cb=1'} : {},
+        tags: {
+            name: 'load-test',
+            cache: bypass ? 'false' : 'true',
+        },
     });
-
-    // Registra tempo com URL como tag (apenas aqui, fora do `http.get`)
+    // tag aqui só na métrica customizada, não nas métricas padrão
     urlTrend.add(res.timings.duration, {
-      url: url, // cuidado: ainda explode se tiver muitas URLs únicas
-      cache: bypass ? 'false' : 'true',
+        url: url,
+        cache: bypass ? 'false' : 'true'
     });
 
     sleep(10);
   }
 }
+
