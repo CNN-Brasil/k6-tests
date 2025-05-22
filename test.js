@@ -31,8 +31,7 @@ export default function () {
         http.get(url, {
             headers: bypass ? {'Cookie': 'vip-go-cb=1'} : {},
             tags: {
-                url: String(url),
-                vus: String(__VU),
+                name: 'load-test',              // tag estática
                 cache: bypass ? 'false' : 'true',
             },
         });
