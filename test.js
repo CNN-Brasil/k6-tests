@@ -32,7 +32,6 @@ export default function () {
             headers: bypass ? {'Cookie': 'vip-go-cb=1'} : {},
             tags: {
                  url: String(url),
-                vus: String(__VU),
                 cache: bypass ? 'false' : 'true',
             },
         });
