@@ -3,25 +3,25 @@ import {sleep} from 'k6';
 
 export const urls = [
     //Home
-    'https://alpha.cnnbrasil.com.br',
+    'https://staging.cnnbrasil.com.br',
     //Home de money
-    'https://alpha.cnnbrasil.com.br/money/',
+    'https://staging.cnnbrasil.com.br/money/',
     //Single
-    'https://alpha.cnnbrasil.com.br/ciencia-da-virada/cerro-porteno-x-palmeiras-horario-e-onde-assistir-ao-jogo-da-libertadores/',
+    'https://staging.cnnbrasil.com.br/ciencia-da-virada/cerro-porteno-x-palmeiras-horario-e-onde-assistir-ao-jogo-da-libertadores/',
     //Autor
-    'https://alpha.cnnbrasil.com.br/autor/leonardo-martins/',
+    'https://staging.cnnbrasil.com.br/autor/leonardo-martins/',
     //Autor com paginiacão
-    'https://alpha.cnnbrasil.com.br/autor/leonardo-martins/pagina/2/',
+    'https://staging.cnnbrasil.com.br/autor/leonardo-martins/pagina/2/',
     //Listagem: Tudo sobre - TAG
-    'https://alpha.cnnbrasil.com.br/tudo-sobre/auto/',
+    'https://staging.cnnbrasil.com.br/tudo-sobre/auto/',
     //Listagem: Editoria (categoria)
-    'https://alpha.cnnbrasil.com.br/esportes/ultimas-noticias/',
+    'https://staging.cnnbrasil.com.br/esportes/ultimas-noticias/',
     //Home de Esportes
-    'https://alpha.cnnbrasil.com.br/esportes/',
+    'https://staging.cnnbrasil.com.br/esportes/',
     //Jogo Ao Vivo
-    'https://alpha.cnnbrasil.com.br/esportes/lances-ao-vivo/libertadores-da-america-2025/06-05-2025/alianza-lima-x-sao-paulo/',
+    'https://staging.cnnbrasil.com.br/esportes/lances-ao-vivo/libertadores-da-america-2025/06-05-2025/alianza-lima-x-sao-paulo/',
     //PAGINA DE AO VIVO
-    'https://alpha.cnnbrasil.com.br/ao-vivo/'
+    'https://staging.cnnbrasil.com.br/ao-vivo/'
 ];
 
 export default function () {
@@ -31,7 +31,8 @@ export default function () {
         http.get(url, {
             headers: bypass ? {'Cookie': 'vip-go-cb=1'} : {},
             tags: {
-                name: 'load-test',              // tag estática
+                 url: String(url),
+                vus: String(__VU),
                 cache: bypass ? 'false' : 'true',
             },
         });
