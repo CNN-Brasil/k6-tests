@@ -37,12 +37,7 @@ export default function () {
             cache: bypass ? 'false' : 'true',
         },
     });
-    // tag aqui só na métrica customizada, não nas métricas padrão
-    urlTrend.add(res.timings.duration, {
-        url: url,
-        cache: bypass ? 'false' : 'true'
-    });
-
+      
     sleep(10);
   }
 }
